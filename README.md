@@ -26,3 +26,39 @@ If you have applied our [patch](https://github.com/baiwei0427/Latency-Measuremen
 ```
 $ sysctl -w net.ipv4.tcp_rto_min=10
 ```
+
+## Installation
+#### [MQ-ECN Software](https://github.com/HKUST-SING/MQ-ECN-Software) 
+To install MQ-ECN qdisc kernel module, please follow the [guidance](https://github.com/HKUST-SING/MQ-ECN-Software). By default:
+  - It performs Deficit Weighted Round Robin (DWRR). All the queues have the same quantum (1.5KB). 
+  - All the queues belonging to a switch port share the per-port buffer space in a first-in-first-serve bias.
+  - Packets with DSCP value *i* are classified to queue *i* of the scheduler.
+  
+To set per-port buffer size to 96KB:
+```
+$ sysctl -w dwrr.shared_buffer_bytes=96000
+```
+To enable per-queue ECN/RED with the standard threshold (32KB):
+```
+$ sysctl -w dwrr.ecn_scheme=1
+$ sysctl -w dwrr.queue_thresh_bytes_0=32000
+$ sysctl -w dwrr.queue_thresh_bytes_1=32000
+$ sysctl -w dwrr.queue_thresh_bytes_2=32000
+$ sysctl -w dwrr.queue_thresh_bytes_3=32000
+```
+To enable per-queue ECN/RED with the minimum threshold (8KB):
+```
+$ sysctl -w dwrr.ecn_scheme=1
+$ sysctl -w dwrr.queue_thresh_bytes_0=8000
+$ sysctl -w dwrr.queue_thresh_bytes_1=8000
+$ sysctl -w dwrr.queue_thresh_bytes_2=8000
+$ sysctl -w dwrr.queue_thresh_bytes_3=8000
+```
+To enable MQ-ECN:
+```
+$ sysctl -w dwrr.ecn_scheme=3
+```
+For more parameter settings, please see [params.h](https://github.com/HKUST-SING/MQ-ECN-Software/blob/master/sch_dwrr/params.h).
+
+#### [Traffic Generator](https://github.com/HKUST-SING/TrafficGenerator)
+To install the traffic generator, please follow the [guidance](https://github.com/HKUST-SING/TrafficGenerator). After installation, you should start *server* on senders (192.168.102.1 to 192.168.109.1). 
