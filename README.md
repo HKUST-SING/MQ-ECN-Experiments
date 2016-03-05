@@ -17,5 +17,12 @@ To ensure servers on different subnets (e.g., 192.168.101.0/24 and 192.168.102.0
 ```
 $ route add -net 192.168.0.0/16 gw 192.168.101.2
 ```
-
-
+To enable DCTCP on servers:
+```
+$ sysctl -w net.ipv4.tcp_ecn=1
+$ sysctl -w net.ipv4.tcp_congestion_control=dctcp
+```
+If you have applied our [patch](https://github.com/baiwei0427/Latency-Measurement/blob/master/kernel_measurement3.patch), you can adjust TCP RTOmin (in milliseconds) as follows:
+```
+$ sysctl -w net.ipv4.tcp_rto_min=10
+```
