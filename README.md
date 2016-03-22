@@ -54,8 +54,9 @@ $ sysctl -w dwrr.queue_thresh_bytes_1=8000
 $ sysctl -w dwrr.queue_thresh_bytes_2=8000
 $ sysctl -w dwrr.queue_thresh_bytes_3=8000
 ```
-To enable MQ-ECN:
+To enable MQ-ECN (the standard marking threshold is 32KB):
 ```
+$ sysctl -w dwrr.port_thresh_bytes=32000
 $ sysctl -w dwrr.ecn_scheme=3
 ```
 For more parameter settings, please see [params.h](https://github.com/HKUST-SING/MQ-ECN-Software/blob/master/sch_dwrr/params.h).
