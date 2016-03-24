@@ -65,16 +65,16 @@ For more parameter settings, please see [params.h](https://github.com/HKUST-SING
 To install the traffic generator, please follow the [guidance](https://github.com/HKUST-SING/TrafficGenerator). After installation, you should start *server* on senders (192.168.102.1 to 192.168.109.1). 
 
 ## Running Testbed Experiments
-To generate realistic data center traffic, you need to move the files in [conf](https://github.com/HKUST-SING/MQ-ECN-Experiments/tree/master/conf) folder to conf folder of [Traffic Generator](https://github.com/HKUST-SING/TrafficGenerator). There are 19 files in [conf](https://github.com/HKUST-SING/MQ-ECN-Experiments/tree/master/conf) folder in total.
+To generate realistic data center traffic, you need to move the files in [conf](https://github.com/HKUST-SING/MQ-ECN-Experiments/tree/master/conf) folder to conf folder of [Traffic Generator](https://github.com/HKUST-SING/TrafficGenerator). There are 3 files in [conf](https://github.com/HKUST-SING/MQ-ECN-Experiments/tree/master/conf) folder.
   - [DCTCP_CDF.txt](https://github.com/HKUST-SING/MQ-ECN-Experiments/blob/master/conf/DCTCP_CDF.txt) gives the flow size distribution of the web search workload. 
-  - `websearch_config_Nm.txt` are client configuration files to generate *balanced* traffic with the average throughput of *N* Mbps. A flow is randomly mapped to four services with equal probabilities.    
-  - `websearch_unbalance_config_Nm.txt` are client configuration files to generate *unbalanced* traffic with the average throughput of *N* Mbps. A flow is randomly mapped to four services with probabilities of 10%, 20%, 30% and 40%.    
+  - [websearch_config.txt](https://github.com/HKUST-SING/MQ-ECN-Experiments/blob/master/conf/websearch_config.txt) is a client configuration file to generate *balanced* traffic. In balanced traffic pattern, a flow is randomly mapped to four service queues with equal probabilities.    
+  - [websearch_unbalance_config.txt](https://github.com/HKUST-SING/MQ-ECN-Experiments/blob/master/conf/websearch_unbalance_config.txt) is a client configuration file to generate *unbalanced* traffic. In unbalanced traffic pattern, a flow is randomly mapped to four service queues with probabilities of 10%, 20%, 30% and 40%.    
 
 For example, to generate balanced traffic with the average throughput of 900Mbps, please input the following command in the top [Traffic Generator](https://github.com/HKUST-SING/TrafficGenerator) folder:
 ```
-$ bin/client -c conf/websearch_config_900m.txt -l fct.txt -s 100 -r src/script/result.py
+$ bin/client -b 900 -c conf/websearch_config.txt -n 5000 -l fct.txt -s 100 -r src/script/result.py
 ```
-In above command, `fct.txt` is the file to store flow completion time (FCT) results. `100` is the seed for random number generation. I used 100 as the seed for both Figure 7 and 8. `src/script/result.py` is the script file to parse FCT results.  
+In above command, `5000` is the total number of flows (requests). `fct.txt` is the file to store flow completion time (FCT) results. `100` is the seed to generate random numbers. I used 100 as the seed for both Figure 7 and 8. `src/script/result.py` is the script file to parse FCT results.  
 
 ## Contact
 If you have any question about MQ-ECN testbed experiments, please contact [Wei Bai](http://sing.cse.ust.hk/~wei/).
